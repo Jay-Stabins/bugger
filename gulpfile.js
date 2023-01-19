@@ -10,7 +10,7 @@ const pjson = require('./package.json')
 const autoprefixer = require('autoprefixer')
 const browserSync = require('browser-sync').create()
 const concat = require('gulp-concat')
-const cssnano = require ('cssnano')
+const cssnano = require('cssnano')
 const imagemin = require('gulp-imagemin')
 const pixrem = require('pixrem')
 const plumber = require('gulp-plumber')
@@ -51,12 +51,12 @@ const paths = pathsConfig()
 // Styles autoprefixing and minification
 function styles() {
   const processCss = [
-      autoprefixer(), // adds vendor prefixes
-      pixrem(),       // add fallbacks for rem units
+    autoprefixer(), // adds vendor prefixes
+    pixrem(),       // add fallbacks for rem units
   ]
 
   const minifyCss = [
-      cssnano({ preset: 'default' })   // minify result
+    cssnano({ preset: 'default' })   // minify result
   ]
 
   return src(`${paths.sass}/project.scss`)
@@ -102,8 +102,8 @@ function imgCompression() {
 }
 // Run django server
 function runServer(cb) {
-  const cmd = spawn('python', ['manage.py', 'runserver'], {stdio: 'inherit'})
-  cmd.on('close', function(code) {
+  const cmd = spawn('python', ['manage.py', 'runserver'], { stdio: 'inherit' })
+  cmd.on('close', function (code) {
     console.log('runServer exited with code ' + code)
     cb(code)
   })
@@ -117,17 +117,17 @@ function initBrowserSync() {
       `${paths.js}/*.js`,
       `${paths.templates}/*.html`
     ], {
-      // https://www.browsersync.io/docs/options/#option-proxy
-      proxy:  {
-        target: '127.0.0.1:8000',
-        proxyReq: [
-          function(proxyReq, req) {
-            // Assign proxy "host" header same as current request at Browsersync server
-            proxyReq.setHeader('Host', req.headers.host)
-          }
-        ]
-      }
+    // https://www.browsersync.io/docs/options/#option-proxy
+    proxy: {
+      target: '127.0.0.1:8000',
+      proxyReq: [
+        function (proxyReq, req) {
+          // Assign proxy "host" header same as current request at Browsersync server
+          proxyReq.setHeader('Host', req.headers.host)
+        }
+      ]
     }
+  }
   )
 }
 

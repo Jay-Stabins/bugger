@@ -1,0 +1,108 @@
+{% load static i18n %}
+<!-- Static Menu for mobile -->
+<div class="position-relative" id="mobile-nav-button">
+  <div class="position-absolute top-0 end-0">
+    {% comment %} <i class="fa-solid fa-rocket fa-2xl p-4 text-danger"></i> {% endcomment %}
+    <div id="nav-icon1" data-bs-toggle="offcanvas" data-bs-target="#sidebar-offcanvas" aria-controls="sidebar-offcanvas">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark vh-100 offcanvas-sm" 
+     data-bs-backdrop="static" style="width: 260px;" id="sidebar-offcanvas">
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+      <i class="fa-solid fa-bugs fa-xl me-2"></i>
+      <span class="fs-4">Bugger</span>
+    </a>
+    <hr>
+    {% with request.resolver_match.url_name as url_name %}
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="{% url 'home' %}" 
+        {% if url_name == 'home' %}
+            class="nav-link active" aria-current="page" class="p-2"
+        {% else %}
+            class="nav-link text-white"
+        {% endif %}
+          >
+          <i class="fa-solid fa-house me-2"></i>
+          Home
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'about' %}" 
+        {% if url_name == 'about' %}
+            class="nav-link active" aria-current="page" class="p-2"
+        {% else %}
+            class="nav-link text-white"
+        {% endif %}
+          >
+          <i class="fa-solid fa-circle-info me-2"></i>
+          About
+        </a>
+      </li>
+      {% if request.user.is_authenticated %}
+      <li>
+        <a href="{% url 'users:detail' request.user.username %}" 
+        {% if url_name == 'detail' %}
+            class="nav-link active" aria-current="page" class="p-2"
+        {% else %}
+            class="nav-link text-white"
+        {% endif %}
+          >
+          <i class="fa-regular fa-user me-2"></i>
+          {% translate "My Profile" %}
+        </a>
+      </li>
+      {% else %}
+      <li>
+        <a href="{% url 'account_login'  %}" 
+        {% if url_name == 'account_login' %}
+            class="nav-link active" aria-current="page" class="p-2"
+        {% else %}
+            class="nav-link text-white"
+        {% endif %}
+          >
+          <i class="fa-solid fa-right-to-bracket me-2"></i>
+          {% translate "Sign In" %}
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'account_signup' %}" 
+        {% if url_name == 'account_signup' %}
+            class="nav-link active" aria-current="page" class="p-2"
+        {% else %}
+            class="nav-link text-white"
+        {% endif %}
+          >
+          <i class="fa-solid fa-user-plus me-2"></i>
+          {% translate "Sign Up" %}
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+    {% endwith %}
+    <div class="form-check form-switch form-check-reverse">
+      <label class="form-check-label" for="darkmodetoggle"><i class="fa-solid fa-moon"></i></label>
+      <input class="form-check-input" type="checkbox" role="switch" id="darkmodetoggle" checked>
+    </div>
+    {% if request.user.is_authenticated %}
+    <hr>
+    <div class="dropdown">
+      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://github.com/mdo.png" alt="" class="rounded-circle me-2" width="32" height="32">
+        <strong>mdo</strong>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+        <li><a class="dropdown-item" href="#">New project...</a></li>
+        <li><a class="dropdown-item" href="#">Settings</a></li>
+        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" href="#">Sign out</a></li>
+      </ul>
+    </div>
+    {% endif %}
+  </div>
