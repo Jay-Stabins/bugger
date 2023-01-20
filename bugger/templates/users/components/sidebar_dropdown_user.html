@@ -1,0 +1,12 @@
+<a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="sidebar-dropdown-user" data-bs-toggle="dropdown" aria-expanded="false">
+<img 
+    src="{{ avatar.url }}"
+    class="avatar rounded-circle me-2" alt="{{ request.user.username }} Profile Picture" 
+    width="32" height="32"
+    hX-get="{% url 'users:get-profile-image' %}"
+    hx-swap="outerHTML"
+    hx-trigger="profile_updated from:body"
+    hx-target="#sidebar-dropdown-user"
+>
+<strong>{{ request.user.name|default:request.user.username|title }}</strong>
+</a>

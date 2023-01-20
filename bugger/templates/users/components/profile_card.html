@@ -1,0 +1,23 @@
+{% load static %}
+{% load humanize %}
+<div class="card shadow border-0 text-center p-0">
+    <img class="profile-cover rounded-top" src="{% if object.cover_img %}{{ object.cover_img.url}}{% else %}https://picsum.photos/500/300?grayscale{% endif %}" style="object-fit:cover;">
+    <div class="card-body pb-5">
+        <img id='image' src="{% if object.avatar %}{{ object.avatar.url}}{% else %}{% static '/images/avatars/blank-profile-picture.png' %}{% endif %}" class="avatar-xl rounded-circle mx-auto mt-n7 mb-4" alt="{{object.username}}">
+        {% if object.name %}<div class='h3'>{{ object.name }}</div>{% endif %}
+        <h4 class="display-5">{{ object.username|capfirst }}</h4>
+        <h5 class="fw-normal">{{ object.company }}</h5>
+        <p class="text-gray mb-4">{{ object.location }}</p>
+        {% if object.show_primary_email %}
+            <p>{{ object.email }}</p>
+        {% endif %}        
+        {% if object.website %}
+            <p><a href="{{ object.website }}" target="blank">{{object.website}}</a></p>
+        {% endif %}
+        {% if object.bio %}
+            <p>{{object.bio}}</p>
+        {% endif %}
+        <a class="btn btn-sm btn-secondary" href="#">Connect</a>
+        <a class="btn btn-sm btn-secondary" href="#">Send Message</a>
+    </div>
+</div>

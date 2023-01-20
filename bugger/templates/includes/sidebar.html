@@ -2,7 +2,6 @@
 <!-- Static Menu for mobile -->
 <div class="position-relative" id="mobile-nav-button">
   <div class="position-absolute top-0 end-0">
-    {% comment %} <i class="fa-solid fa-rocket fa-2xl p-4 text-danger"></i> {% endcomment %}
     <div id="nav-icon1" data-bs-toggle="offcanvas" data-bs-target="#sidebar-offcanvas" aria-controls="sidebar-offcanvas">
       <span></span>
       <span></span>
@@ -29,7 +28,7 @@
         {% endif %}
           >
           <i class="fa-solid fa-house me-2"></i>
-          Home
+          {% translate "Home" %}
         </a>
       </li>
       <li>
@@ -41,13 +40,13 @@
         {% endif %}
           >
           <i class="fa-solid fa-circle-info me-2"></i>
-          About
+          {% translate "About" %}
         </a>
       </li>
       {% if request.user.is_authenticated %}
       <li>
         <a href="{% url 'users:detail' request.user.username %}" 
-        {% if url_name == 'detail' %}
+        {% if url_name == 'detail' or url_name == 'account_email'%}
             class="nav-link active" aria-current="page" class="p-2"
         {% else %}
             class="nav-link text-white"
@@ -92,16 +91,28 @@
     {% if request.user.is_authenticated %}
     <hr>
     <div class="dropdown">
-      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="https://github.com/mdo.png" alt="" class="rounded-circle me-2" width="32" height="32">
-        <strong>mdo</strong>
+      <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="sidebar-dropdown-user" data-bs-toggle="dropdown" aria-expanded="false">
+        <img 
+          src="{% if request.user.avatar %}{{ request.user.avatar.url}}{% else %}{% static '/img/avatars/default/blank-profile-picture.png' %}{% endif %}"
+          class="avatar rounded-circle me-2" alt="{{ request.user.username }} Profile Picture" 
+          width="32" height="32"
+          hX-get="{% url 'users:get-profile-image' %}"
+          hx-swap="outerHTML"
+          hx-trigger="profile_updated from:body"
+          hx-target="#sidebar-dropdown-user"
+        >
+        <strong>{{ request.user.name|default:request.user.username|title }}</strong>
       </a>
-      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+      <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="sidebar-dropdown-user">
         <li><a class="dropdown-item" href="#">New project...</a></li>
         <li><a class="dropdown-item" href="#">Settings</a></li>
-        <li><a class="dropdown-item" href="#">Profile</a></li>
+        <li><a class="dropdown-item" href="{% url 'users:detail' request.user.username %}">Profile</a></li>
         <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item" href="#">Sign out</a></li>
+        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#static_modal"
+                hx-get="{% url 'account_logout' %}"
+                hx-target="#modal-swap"
+                hx-trigger="click"  
+              >Sign out</a></li>
       </ul>
     </div>
     {% endif %}

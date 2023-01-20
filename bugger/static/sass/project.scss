@@ -51,8 +51,6 @@ $red: #b94a48;
 
 /*show for small screens */
 @media screen and (max-width: 575px) {
-
-  /* I've given 1023px but you can change to proper width */
   #mobile-nav-button {
     display: block;
     z-index: 10000;
@@ -132,4 +130,15 @@ $red: #b94a48;
   -moz-transform: rotate(-135deg);
   -o-transform: rotate(-135deg);
   transform: rotate(-135deg);
+}
+
+
+// Avatar For Profile Card
+.avatar-xl {
+  height: 8rem;
+  width: 8rem;
+}
+
+.mt-n7 {
+  margin-top: -8rem !important;
 }
