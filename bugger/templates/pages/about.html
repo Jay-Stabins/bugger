@@ -1,1 +1,12 @@
 {% extends "base.html" %}
+{% load socialaccount %}
+
+{% block content %}
+{% with request.user.socialaccount_set.first.extra_data as extra_data %}
+
+{{extra_data.plan.name}}
+
+{% comment %} <div hx-get="{{extra_data.html_url}}" hx-trigger="load"></div> {% endcomment %}
+
+{% endwith %}
+{% endblock content %}

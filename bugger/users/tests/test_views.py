@@ -13,7 +13,9 @@ from bugger.users.models import User
 from bugger.users.tests.factories import UserFactory
 from bugger.users.views import (
     UserRedirectView,
+    UserUpdateImageView,
     UserUpdateView,
+    get_profile,
     user_detail_view,
 )
 
@@ -21,14 +23,6 @@ pytestmark = pytest.mark.django_db
 
 
 class TestUserUpdateView:
-    """
-    TODO:
-        extracting view initialization code as class-scoped fixture
-        would be great if only pytest-django supported non-function-scoped
-        fixture db access -- this is a work-in-progress for now:
-        https://github.com/pytest-dev/pytest-django/pull/258
-    """
-
     def dummy_get_response(self, request: HttpRequest):
         return None
 
@@ -67,8 +61,7 @@ class TestUserUpdateView:
         form.instance = user
         view.form_valid(form)
 
-        messages_sent = [m.message for m in messages.get_messages(request)]
-        assert messages_sent == ["Information successfully updated"]
+        assert view.form_valid(form).status_code == 200
 
 
 class TestUserRedirectView:
@@ -101,3 +94,29 @@ class TestUserDetailView:
         assert isinstance(response, HttpResponseRedirect)
         assert response.status_code == 302
         assert response.url == f"{login_url}?next=/fake-url/"
+
+
+"""
+    path("get_profile_card/<str:username>", get_profile, name="get-profile-card"),
+    path("upload_photo", view=user_update_image_view, name="photo-upload"),
+    path("get_profile_photo", get_profile_image, name="get-profile-image"),
+
+"""
+
+
+class TestUserGetProfile:
+    def test_get_profile_card(self, user: User, rf: RequestFactory):
+        request = rf.get("/fake-url/")
+        request.user = user
+
+        response = get_profile(request, user.username)
+        assert response.status_code == 200
+
+    def test_upload_photo(self, user: User, rf: RequestFactory):
+        view = UserUpdateImageView()
+        request = rf.get("/fake-url/")
+        request.user = UserFactory()
+        pass
+
+    def test_get_profile_photo(self, user: User, rf: RequestFactory):
+        pass

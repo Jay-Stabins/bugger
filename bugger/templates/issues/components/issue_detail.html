@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <h1 class="modal-title fs-5" id="staticBackdropLabel">Issue Detail</h1>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body">
+    <h5>Here is the detail for your issue:</h5>
+    <div>Title: {{ issue.title }}</div>
+    <div>Description: {{ issue.description }}</div>
+    <div>Priority: {{ issue.get_priority_display }}</div>
+    <div>Type: {{ issue.get_type_display }}</div>
+    <div>Status: {{ issue.get_status_display }}</div>
+    <div>Created: {{ issue.created_at }}</div>
+    <div>Updated: {{ issue.updated_at }}</div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary"
+        hx-trigger='click'
+        hx-get="{% url 'issues:issue-update' issue.id %}"
+        hx-target='#modal-swap'
+    >Update</button>
+    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+</div>

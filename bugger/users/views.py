@@ -5,8 +5,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import DetailView, RedirectView, UpdateView
-from users.forms import UserUploadImageForm
 
+from bugger.users.forms import UserUploadImageForm
 from bugger.utils.helpers import htmx_message_response
 
 User = get_user_model()
@@ -33,7 +33,6 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         "show_primary_email",
         "website",
     ]
-    success_message = _("Information successfully updated")
     template_name = "users/components/update_profile.html"
 
     def get_success_url(self):
@@ -48,7 +47,7 @@ class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     def form_valid(self, form):
         form.save()
         return htmx_message_response(
-            204,
+            200,
             "Information successfully updated",
             "success",
             profile_updated=None,

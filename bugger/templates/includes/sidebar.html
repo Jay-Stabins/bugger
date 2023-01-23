@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark vh-100 offcanvas-sm" 
+<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark vh-100 offcanvas-sm border-end border-secondary" 
      data-bs-backdrop="static" style="width: 260px;" id="sidebar-offcanvas">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
       <i class="fa-solid fa-bugs fa-xl me-2"></i>
@@ -32,18 +32,30 @@
         </a>
       </li>
       <li>
-        <a href="{% url 'about' %}" 
-        {% if url_name == 'about' %}
+        <a href="{% url 'github_profile' %}" 
+        {% if url_name == 'github_profile' %}
             class="nav-link active" aria-current="page" class="p-2"
         {% else %}
             class="nav-link text-white"
         {% endif %}
           >
-          <i class="fa-solid fa-circle-info me-2"></i>
-          {% translate "About" %}
+          <i class="fa-brands fa-github me-2"></i>
+          {% translate "Github Profile" %}
         </a>
       </li>
       {% if request.user.is_authenticated %}
+      <li>
+        <a href="{% url 'projects:dashboard' %}" 
+        {% if 'projects' in request.resolver_match.route %}
+            class="nav-link active" aria-current="page" class="p-2"
+        {% else %}
+            class="nav-link text-white"
+        {% endif %}
+          >
+          <i class="fa-solid fa-diagram-project me-2"></i>
+          {% translate "Projects" %}
+        </a>
+      </li>
       <li>
         <a href="{% url 'users:detail' request.user.username %}" 
         {% if url_name == 'detail' or url_name == 'account_email'%}

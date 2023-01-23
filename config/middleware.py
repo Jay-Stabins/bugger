@@ -1,7 +1,8 @@
 # https://github.com/bblanchon/django-htmx-messages-framework/blob/bootstrap5/htmx_messages/middleware.py
 import json
-from django.utils.deprecation import MiddlewareMixin
+
 from django.contrib.messages import get_messages
+from django.utils.deprecation import MiddlewareMixin
 
 
 class HtmxMessageMiddleware(MiddlewareMixin):
@@ -44,5 +45,5 @@ class HtmxMessageMiddleware(MiddlewareMixin):
 
         # HTMX does not display trigger on non-2XX status_code's
         # This is very very bad
-        response.status_code = 204
+        # response.status_code = 200
         return response

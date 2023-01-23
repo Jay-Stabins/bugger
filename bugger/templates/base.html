@@ -48,19 +48,23 @@
           <!-- Main Content div -->
           <div class="col scrollable-col">
 
-          {% if messages %}
+          
+          {% comment %} HTMX should handle all Messages via middleware and toast notifications {% endcomment %}
+          {% comment %} {% if messages %}
             {% for message in messages %}
               <div class="alert alert-dismissible {% if message.tags %}alert-{{ message.tags }}{% endif %}">
                 {{ message }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             {% endfor %}
-          {% endif %}
+          {% endif %} {% endcomment %}
+
           
           {% block content %}
 
           {% endblock content %}
           </div> <!-- /scrollable-col End of Main Content -->
+          
       </div> <!-- /row End of main content row -->
 
     </div> <!-- /container -->
@@ -79,6 +83,7 @@
 
     <!-- Toasts -->
     <div data-toast-container class="toast-container position-fixed top-0 end-0 p-3">
+ 
       <div data-toast-template class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="d-flex">
           <div data-toast-body class="toast-body text-white dispay-1"></div>

@@ -75,11 +75,13 @@ THIRD_PARTY_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "allauth.socialaccount.providers.github",
 ]
 
 LOCAL_APPS = [
     "bugger.users",
-    # Your stuff: custom apps go here
+    "bugger.issues",
+    "bugger.projects",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -274,6 +276,16 @@ SOCIALACCOUNT_ADAPTER = "bugger.users.adapters.SocialAccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/forms.html
 SOCIALACCOUNT_FORMS = {"signup": "bugger.users.forms.UserSocialSignupForm"}
 
+SOCIALACCOUNT_PROVIDERS = {
+    "github": {
+        # https://docs.github.com/en/developers/apps/building-oauth-apps/scopes-for-oauth-apps
+        "SCOPE": [
+            "user",
+            "repo",
+            "read:org",
+        ],
+    }
+}
 
 # Your stuff...
 # ------------------------------------------------------------------------------
